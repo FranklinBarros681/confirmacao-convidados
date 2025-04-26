@@ -1,36 +1,63 @@
-
 const express = require('express');
 const bodyParser = require('body-parser');
+const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
-const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Configurar body parser
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Servir arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
-let convidados = [];
+// Banco de Dados SQLite
+const db = new sqlite3.Database('./convidados.db');
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'index.html'));
+db.serialize(() => {
+  db.run(`CREATE TABLE IF NOT EXISTS convidados (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    email TEXT NOT NULL,
+    acompanhantes INTEGER NOT NULL
+  )`);
 });
 
+// Rota para receber confirmações
 app.post('/confirmar', (req, res) => {
-  const { nome, quantidade } = req.body;
-  convidados.push({ nome, quantidade });
-  res.send('<h2>Confirmação recebida! Obrigado.</h2><a href="/">Voltar</a>');
+  const { nome, email, acompanhantes } = req.body;
+  
+  db.run(`INSERT INTO convidados (nome, email, acompanhantes) VALUES (?, ?, ?)`,
+    [nome, email, acompanhantes],
+    (err) => {
+      if (err) {
+        console.error(err.message);
+        return res.send('Erro ao salvar confirmação.');
+      }
+      res.send('<h1>Confirmação recebida! Obrigado!</h1><a href="/">Voltar</a>');
+    }
+  );
 });
 
+// (Opcional) Rota para listar convidados
 app.get('/admin/convidados', (req, res) => {
-  let html = '<h1>Lista de Convidados Confirmados</h1><ul>';
-  convidados.forEach(c => {
-    html += `<li>${c.nome} - ${c.quantidade} pessoas</li>`;
+  db.all('SELECT * FROM convidados', [], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      res.send('Erro ao buscar convidados.');
+      return;
+    }
+    let resposta = '<h1>Lista de Convidados Confirmados</h1><ul>';
+    rows.forEach((row) => {
+      resposta += `<li>${row.nome} (${row.email}) - ${row.acompanhantes} acompanhante(s)</li>`;
+    });
+    resposta += '</ul>';
+    res.send(resposta);
   });
-  html += '</ul><a href="/">Voltar</a>';
-  res.send(html);
 });
 
+// Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
