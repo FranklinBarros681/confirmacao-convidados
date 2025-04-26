@@ -1,0 +1,61 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  background: url('https://i.imgur.com/4Z6eX9L.jpg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Cormorant Garamond', serif;
+  color: #4B3621;
+}
+
+.container {
+  max-width: 500px;
+  margin: 50px auto;
+  background: rgba(255, 255, 240, 0.9);
+  padding: 30px;
+  border: 2px solid #0B4F32;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.titulo {
+  font-family: 'Great Vibes', cursive;
+  font-size: 48px;
+  color: #0B4F32;
+  margin-bottom: 0;
+}
+
+.subtitulo {
+  font-size: 28px;
+  color: #0B4F32;
+  margin-top: 0;
+}
+
+.mensagem {
+  font-size: 20px;
+  margin: 20px 0;
+}
+
+.formulario input, .formulario button {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+.formulario button {
+  background-color: #0B4F32;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.formulario button:hover {
+  background-color: #094026;
+}
+
+.rodape, .local, .endereco {
+  margin-top: 20px;
+  font-size: 18px;
+}
