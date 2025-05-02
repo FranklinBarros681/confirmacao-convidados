@@ -34,7 +34,7 @@ app.post('/confirmar', (req, res) => {
         console.error(err.message);
         return res.send('Erro ao salvar confirmação.');
       }
-      res.send('<h1>Confirmação recebida! Obrigado!</h1><a href="/">Voltar</a>');
+      res.redirect('/confirmacao.html');
     }
   );
 });
@@ -52,7 +52,7 @@ app.get('/admin/convidados', (req, res) => {
       resposta += `<li>${row.nome} - ${row.acompanhantes} acompanhante(s)</li>`;
     });
     resposta += '</ul>';
-    res.redirect('/confirmacao');
+    res.send(resposta);
   });
 });
 
