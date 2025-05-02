@@ -19,7 +19,6 @@ db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS convidados (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
-    email TEXT NOT NULL,
     acompanhantes INTEGER NOT NULL
   )`);
 });
@@ -28,8 +27,8 @@ db.serialize(() => {
 app.post('/confirmar', (req, res) => {
   const { nome, email, acompanhantes } = req.body;
   
-  db.run(`INSERT INTO convidados (nome, email, acompanhantes) VALUES (?, ?, ?)`,
-    [nome, email, acompanhantes],
+  db.run(`INSERT INTO convidados (nome, acompanhantes) VALUES (?, ?, ?)`,
+    [nome, acompanhantes],
     (err) => {
       if (err) {
         console.error(err.message);

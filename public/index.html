@@ -1,80 +1,84 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Confirmação de Presença</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: url('https://i.imgur.com/4Z6eX9L.jpg') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Cormorant Garamond', serif;
-      color: #4B3621;
-    }
-    .container {
-      max-width: 600px;
-      margin: 50px auto;
-      background: rgba(255, 255, 240, 0.95);
-      padding: 40px;
-      border: 2px solid #0B4F32;
-      border-radius: 12px;
-      text-align: center;
-    }
-    h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 50px;
-      color: #0B4F32;
-      margin-bottom: 20px;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-    }
-    label {
-      margin: 10px 0 5px;
-      font-size: 20px;
-    }
-    input[type="text"], input[type="email"], input[type="number"] {
-      padding: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #0B4F32;
-      border-radius: 5px;
-      font-size: 18px;
-    }
-    input[type="submit"] {
-      background-color: #0B4F32;
-      color: white;
-      padding: 12px;
-      font-size: 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    input[type="submit"]:hover {
-      background-color: #094026;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Confirmação de Presença</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('imagens/fundo.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Cormorant Garamond', serif;
+            color: #4B3621;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: rgba(255, 255, 240, 0.95);
+            padding: 40px;
+            border: 2px solid #0B4F32;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 50px;
+            color: #0B4F32;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        label {
+            margin: 10px 0 5px;
+            font-size: 20px;
+        }
+
+        input[type="text"], input[type="email"], input[type="number"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #0B4F32;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        input[type="submit"] {
+            background-color: #0B4F32;
+            color: white;
+            padding: 12px;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #094026;
+            }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Confirme sua Presença!</h1>
-    <form action="/confirmar" method="POST">
-      <label for="nome">Nome Completo:</label>
-      <input type="text" id="nome" name="nome" required>
+    <div class="container">
+        <h1>Confirme sua Presença!</h1>
+        <form action="/confirmar" method="POST">
+            <label for="nome">Nome Completo:</label>
+            <input type="text" id="nome" name="nome" required>
 
-      <label for="email">E-mail:</label>
-      <input type="email" id="email" name="email" required>
+            <label for="acompanhantes">Número de Acompanhantes:</label>
+            <input type="number" id="acompanhantes" name="acompanhantes" min="0" required>
 
-      <label for="acompanhantes">Número de Acompanhantes:</label>
-      <input type="number" id="acompanhantes" name="acompanhantes" min="0" required>
-
-      <input type="submit" value="Confirmar">
-    </form>
-  </div>
+            <input type="submit" value="Confirmar">
+        </form>
+    </div>
 </body>
 </html>
