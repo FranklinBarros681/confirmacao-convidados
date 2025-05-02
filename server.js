@@ -27,7 +27,7 @@ db.serialize(() => {
 app.post('/confirmar', (req, res) => {
   const { nome, email, acompanhantes } = req.body;
   
-  db.run(`INSERT INTO convidados2 (nome, acompanhantes) VALUES (?, ?, ?)`,
+  db.run(`INSERT INTO convidados2 (nome, acompanhantes) VALUES (?, ?)`,
     [nome, acompanhantes],
     (err) => {
       if (err) {
