@@ -49,10 +49,10 @@ app.get('/admin/convidados', (req, res) => {
     }
     let resposta = '<h1>Lista de Convidados Confirmados</h1><ul>';
     rows.forEach((row) => {
-      resposta += `<li>${row.nome} (${row.email}) - ${row.acompanhantes} acompanhante(s)</li>`;
+      resposta += `<li>${row.nome} - ${row.acompanhantes} acompanhante(s)</li>`;
     });
     resposta += '</ul>';
-    res.send(resposta);
+    res.redirect('/confirmacao');
   });
 });
 
