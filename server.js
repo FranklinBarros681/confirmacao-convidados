@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const db = new sqlite3.Database('./convidados.db');
 
 db.serialize(() => {
-  db.run(`CREATE TABLE IF NOT EXISTS convidados (
+  db.run(`CREATE TABLE IF NOT EXISTS convidados2 (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
     acompanhantes INTEGER NOT NULL
@@ -27,7 +27,7 @@ db.serialize(() => {
 app.post('/confirmar', (req, res) => {
   const { nome, email, acompanhantes } = req.body;
   
-  db.run(`INSERT INTO convidados (nome, acompanhantes) VALUES (?, ?, ?)`,
+  db.run(`INSERT INTO convidados2 (nome, acompanhantes) VALUES (?, ?, ?)`,
     [nome, acompanhantes],
     (err) => {
       if (err) {
@@ -41,7 +41,7 @@ app.post('/confirmar', (req, res) => {
 
 // (Opcional) Rota para listar convidados
 app.get('/admin/convidados', (req, res) => {
-  db.all('SELECT * FROM convidados', [], (err, rows) => {
+  db.all('SELECT * FROM convidados2', [], (err, rows) => {
     if (err) {
       console.error(err.message);
       res.send('Erro ao buscar convidados.');
