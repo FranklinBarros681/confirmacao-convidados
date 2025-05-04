@@ -65,13 +65,36 @@ app.get('/admin/convidados', (req, res) => {
     const linhas = conteudo.trim().split('\n').slice(1); // remove cabeçalho
 
     let resposta = '<h1>Lista de Convidados Confirmados</h1><ul>';
-    linhas.forEach(linha => {
+    linhas.forEach((linha, index) => {
         const [nome, acompanhantes] = linha.split(',');
-        resposta += `<li>${nome.replace(/"/g, '')} - ${acompanhantes} acompanhante(s)</li>`;
+        resposta += `
+    <li>
+      ${nome.replace(/"/g, '')} - ${acompanhantes} acompanhante(s)
+      <form action="/admin/excluir" method="POST" style="display:inline">
+        <input type="hidden" name="index" value="${index}">
+        <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este convidado?')">Excluir</button>
+      </form>
+    </li>`;
     });
     resposta += '</ul>';
+});
 
-    res.send(resposta);
+app.post('/admin/excluir', (req, res) => {
+    const { index } = req.body;
+    const arquivoCSV = path.join(__dirname, 'convidados.csv');
+
+    if (!fs.existsSync(arquivoCSV)) {
+        return res.redirect('/admin/convidados');
+    }
+
+    let linhas = fs.readFileSync(arquivoCSV, 'utf8').trim().split('\n');
+    const cabecalho = linhas.shift(); // Remove cabeçalho
+    linhas.splice(index, 1); // Remove a linha pelo índice
+
+    const novoConteudo = [cabecalho, ...linhas].join('\n') + '\n';
+    fs.writeFileSync(arquivoCSV, novoConteudo, 'utf8');
+
+    res.redirect('/admin/convidados');
 });
 
 // Iniciar servidor
